@@ -18,7 +18,8 @@ enum Buffs {
 	SPY_NORMALWATCHBUFF = 6,
 	MEDIC_GOODSTART = 7,
 	SOLDIER_EXTRAROCKETAMMO = 8,
-	DEMO_EXTRAPIPEAMMO = 9
+	DEMO_EXTRAPIPEAMMO = 9,
+	MULTI_PAINTRAIN = 10
 }
 
 new g_iIDs[Buffs];
@@ -51,6 +52,7 @@ public OnMapStart() {
 		g_iIDs[MEDIC_UBERSAWBUFF] = Perks_Register("Medic - Ubersaw gives 35% charge on hit", "MEDIC_UBERSAWBUFF", false);
 		g_iIDs[SPY_NORMALWATCHBUFF] = Perks_Register("Spy - Normal watch: Decreased consume rate", "SPY_NORMALWATCHBUFF", false);
 		g_iIDs[MEDIC_GOODSTART] = Perks_Register("Medic - Spawn with 20% charge", "MEDIC_GOODSTART", false);
+		g_iIDs[MULTI_PAINTRAIN] = Perks_Register("Demo/Soli - Better Paintrain", "MULTI_PAINTRAIN", false);
 	}
 }
 
@@ -181,6 +183,15 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 1);
 		TF2Items_SetAttribute(hTest, 0,  34, 0.5);
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+	if (iItemDefinitionIndex == 154 && Perks_GetClientHas(iClient, g_iIDs[MULTI_PAINTRAIN])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 1);
+		TF2Items_SetAttribute(hTest, 0,  68, 1.0);
 		TF2Items_SetQuality(hTest, g_iQuality);
 		hItemOverride = hTest;
 		return Plugin_Changed;
