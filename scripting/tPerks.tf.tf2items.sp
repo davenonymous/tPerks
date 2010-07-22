@@ -16,7 +16,9 @@ enum Buffs {
 	SNIPER_BLEEDINGHUNTSMAN = 4,
 	MEDIC_UBERSAWBUFF = 5,
 	SPY_NORMALWATCHBUFF = 6,
-	MEDIC_GOODSTART = 7
+	MEDIC_GOODSTART = 7,
+	SOLDIER_EXTRAROCKETAMMO = 8,
+	DEMO_EXTRAPIPEAMMO = 9
 }
 
 new g_iIDs[Buffs];
@@ -40,8 +42,10 @@ public OnAllPluginsLoaded() {
 public OnMapStart() {
 	if(g_bRegister) {
 		//g_iIDs[ENGINEER_MOREMETAL] = Perks_Register("Engineer - More Metal", "ENGINEER_MOREMETAL", false);
-		g_iIDs[DEMO_EXTRAPIPES] = Perks_Register("Demoman - Extra Pipes", "DEMO_EXTRAPIPES", false);
-		g_iIDs[SOLDIER_EXTRAROCKETS] = Perks_Register("Soldier - Extra Rockets", "SOLDIER_EXTRAROCKETS", false);
+		g_iIDs[DEMO_EXTRAPIPES] = Perks_Register("Demoman - Extra Pipes", "DEMO_EXTRAPIPES", true);
+		g_iIDs[DEMO_EXTRAPIPEAMMO] = Perks_Register("Demoman - Extra Pipe ammo", "DEMO_EXTRAPIPEAMMO", false);
+		g_iIDs[SOLDIER_EXTRAROCKETS] = Perks_Register("Soldier - Extra Rockets", "SOLDIER_EXTRAROCKETS", true);
+		g_iIDs[SOLDIER_EXTRAROCKETAMMO] = Perks_Register("Soldier - Extra Rocket ammo", "SOLDIER_EXTRAROCKETAMMO", false);
 		g_iIDs[HEAVY_FISTSGIVESPEED] = Perks_Register("Heavy - Movement speed bonus with fists", "HEAVY_FISTSGIVESPEED", false);
 		g_iIDs[SNIPER_BLEEDINGHUNTSMAN] = Perks_Register("Sniper - Huntsman does bleeding damage", "SNIPER_BLEEDINGHUNTSMAN", false);
 		g_iIDs[MEDIC_UBERSAWBUFF] = Perks_Register("Medic - Ubersaw gives 35% charge on hit", "MEDIC_UBERSAWBUFF", false);
@@ -69,10 +73,18 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 	}
 
 	if (StrEqual(strClassName, "tf_weapon_grenadelauncher") && Perks_GetClientHas(iClient, g_iIDs[DEMO_EXTRAPIPES])) {
-		LogMessage("giving extra pipes");
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 1);
 		TF2Items_SetAttribute(hTest, 0,  4, 1.5);				// give 50% more pipes
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+	if (StrEqual(strClassName, "tf_weapon_grenadelauncher") && Perks_GetClientHas(iClient, g_iIDs[DEMO_EXTRAPIPEAMMO])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 1);
+		TF2Items_SetAttribute(hTest, 0,  37, 1.3);				// give 30% more ammo
 		TF2Items_SetQuality(hTest, g_iQuality);
 		hItemOverride = hTest;
 		return Plugin_Changed;
@@ -99,6 +111,29 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 		hItemOverride = hTest;
 		return Plugin_Changed;
 	}
+
+	if (StrEqual(strClassName, "tf_weapon_rocketlauncher") && Perks_GetClientHas(iClient, g_iIDs[SOLDIER_EXTRAROCKETAMMO])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 1);
+		TF2Items_SetAttribute(hTest, 0,  37, 1.2);				// give 20% more ammo
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+	if (StrEqual(strClassName, "tf_weapon_rocketlauncher_directhit") && Perks_GetClientHas(iClient, g_iIDs[SOLDIER_EXTRAROCKETAMMO])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 5);
+		TF2Items_SetAttribute(hTest, 0,  37, 1.2);				// give 20% more ammo
+		TF2Items_SetAttribute(hTest, 1,  100, 0.3);
+		TF2Items_SetAttribute(hTest, 2,  103, 1.8);
+		TF2Items_SetAttribute(hTest, 3,  2, 1.25);
+		TF2Items_SetAttribute(hTest, 4,  114, 1.0);
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
 
 	if (iItemDefinitionIndex == 43 && Perks_GetClientHas(iClient, g_iIDs[HEAVY_FISTSGIVESPEED])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
