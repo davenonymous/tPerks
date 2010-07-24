@@ -225,6 +225,18 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 		return Plugin_Changed;
 	}
 
+	if (iItemDefinitionIndex == 36 && Perks_GetClientHas(iClient, g_iIDs[MEDIC_ANTISAPPER])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 3);
+		TF2Items_SetAttribute(hTest, 0,  146, 1.0);		// Damage applies to sappers
+		TF2Items_SetAttribute(hTest, 1,  16, 3.0);
+		TF2Items_SetAttribute(hTest, 2,  129, -3.0);
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+
 	if (iItemDefinitionIndex == 159 && Perks_GetClientHas(iClient, g_iIDs[HEAVY_HEALTHYCHOCOLATE])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 2);
