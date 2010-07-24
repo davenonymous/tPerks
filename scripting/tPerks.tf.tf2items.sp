@@ -18,7 +18,13 @@ enum Buffs {
 	SPY_NORMALWATCHBUFF = 6,
 	MEDIC_GOODSTART = 7,
 	SOLDIER_EXTRAROCKETAMMO = 8,
-	DEMO_EXTRAPIPEAMMO = 9
+	DEMO_EXTRAPIPEAMMO = 9,
+	SNIPER_FASTERCHARGE = 10,
+	SCOUT_SCATTERRELOAD = 11,
+	MEDIC_ANTISAPPER = 12,
+	HEAVY_HEALTHYCHOCOLATE = 13,
+	ENGINEER_METALPISTOL = 14,
+	ENGINEER_BUILDINGPUMPGUN = 15
 }
 
 new g_iIDs[Buffs];
@@ -41,7 +47,6 @@ public OnAllPluginsLoaded() {
 
 public OnMapStart() {
 	if(g_bRegister) {
-		//g_iIDs[ENGINEER_MOREMETAL] = Perks_Register("Engineer - More Metal", "ENGINEER_MOREMETAL", false);
 		g_iIDs[DEMO_EXTRAPIPES] = Perks_Register("Demoman - Extra Pipes", "DEMO_EXTRAPIPES", true);
 		g_iIDs[DEMO_EXTRAPIPEAMMO] = Perks_Register("Demoman - Extra Pipe ammo", "DEMO_EXTRAPIPEAMMO", false);
 		g_iIDs[SOLDIER_EXTRAROCKETS] = Perks_Register("Soldier - Extra Rockets", "SOLDIER_EXTRAROCKETS", true);
@@ -52,6 +57,12 @@ public OnMapStart() {
 		g_iIDs[SPY_NORMALWATCHBUFF] = Perks_Register("Spy - Normal watch: Decreased consume rate", "SPY_NORMALWATCHBUFF", false);
 		g_iIDs[MEDIC_GOODSTART] = Perks_Register("Medic - Spawn with 20% charge", "MEDIC_GOODSTART", false);
 		g_iIDs[MULTI_PAINTRAIN] = Perks_Register("Demo/Soli - Better Paintrain", "MULTI_PAINTRAIN", false);
+		g_iIDs[SNIPER_FASTERCHARGE] = Perks_Register("Sniper - Charge Rifle faster", "SNIPER_FASTERCHARGE", false);
+		g_iIDs[SCOUT_SCATTERRELOAD] = Perks_Register("Scout - Faster scattergun reload", "SCOUT_SCATTERRELOAD", false);
+		g_iIDs[MEDIC_ANTISAPPER] = Perks_Register("Medic - Needles can remove sappers", "MEDIC_ANTISAPPER", false);
+		g_iIDs[HEAVY_HEALTHYCHOCOLATE] = Perks_Register("Heavy - Chocolate gives extra heal from medics", "HEAVY_HEALTHYCHOCOLATE", false);
+		g_iIDs[ENGINEER_METALPISTOL] = Perks_Register("Engineer - Metalregeneration when wearing pistol", "ENGINEER_METALPISTOL", false);
+		g_iIDs[ENGINEER_BUILDINGPUMPGUN] = Perks_Register("Engineer - Shotgun has increased damage vs buildings", "ENGINEER_BUILDINGPUMPGUN", false);
 	}
 }
 
@@ -186,6 +197,63 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 		hItemOverride = hTest;
 		return Plugin_Changed;
 	}
+
+	if (iItemDefinitionIndex == 13 && Perks_GetClientHas(iClient, g_iIDs[SCOUT_SCATTERRELOAD])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 1);
+		TF2Items_SetAttribute(hTest, 0,  97, 0.8);		// only takes 80% of time to reload
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+	if (iItemDefinitionIndex == 14 && Perks_GetClientHas(iClient, g_iIDs[SNIPER_FASTERCHARGE])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 1);
+		TF2Items_SetAttribute(hTest, 0,  90, 1.2);		// 20% faster charge
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+	if (iItemDefinitionIndex == 17 && Perks_GetClientHas(iClient, g_iIDs[MEDIC_ANTISAPPER])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 1);
+		TF2Items_SetAttribute(hTest, 0,  146, 1.0);		// Damage applies to sappers
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+	if (iItemDefinitionIndex == 159 && Perks_GetClientHas(iClient, g_iIDs[HEAVY_HEALTHYCHOCOLATE])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 2);
+		TF2Items_SetAttribute(hTest, 0,  70, 1.15);		// 15% faster heal from medics
+		TF2Items_SetAttribute(hTest, 1,  139, 1.0);
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+	if (iItemDefinitionIndex == 22 && Perks_GetClientHas(iClient, g_iIDs[ENGINEER_METALPISTOL])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 2);
+		TF2Items_SetAttribute(hTest, 0,  113, 15.0);		// 15 metal every 5s
+		TF2Items_SetAttribute(hTest, 1,  128, 1.0);			// only when active weapon
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+	if (iItemDefinitionIndex == 9 && Perks_GetClientHas(iClient, g_iIDs[ENGINEER_BUILDINGPUMPGUN])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 1);
+		TF2Items_SetAttribute(hTest, 0,  137, 1.2);		// 20% more damage vs buildings
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
 
 	if((iItemDefinitionIndex == 35 || iItemDefinitionIndex == 29) && Perks_GetClientHas(iClient, g_iIDs[MEDIC_GOODSTART])) {
 		CreateTimer(0.1, Medic_FillChargeMeter, iClient);
