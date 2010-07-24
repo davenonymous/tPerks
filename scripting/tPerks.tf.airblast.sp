@@ -22,7 +22,7 @@ new g_bRegister = false;
 
 new Handle:g_hCvarPower;
 
-new Float:g_fPower = 400.0;
+new Float:g_fPower;
 
 public Plugin:myinfo = {
 	name        = "tPerks, TF2, Pyro Airblast",
@@ -34,7 +34,22 @@ public Plugin:myinfo = {
 
 public OnPluginStart() {
 	g_iOffsetAmmo = FindSendPropInfo("CTFPlayer", "m_iAmmo");
+	g_hCvarPower = CreateConVar("sm_tperks_tf_airblast_power", "300.0", "Airblast power. (Def.: 300.0)", FCVAR_PLUGIN, true, 0.0);
+
+	HookConVarChange(g_hCvarPower, Cvar_Changed);
+
+	HookEvent("player_spawn", OnPlayerSpawn);
 }
+
+public OnConfigsExecuted()
+{
+	g_fPower = GetConVarFloat(g_hCvarPower);
+}
+
+public Cvar_Changed(Handle:convar, const String:oldValue[], const String:newValue[]) {
+	OnConfigsExecuted();
+}
+
 
 public OnAllPluginsLoaded() {
 	if(LibraryExists("tperks")) {
@@ -53,7 +68,7 @@ public OnMapEnd() {
 		Perks_UnRegister();
 }
 
-public Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
+public OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
 	new iClient = GetClientOfUserId(GetEventInt(event, "userid"));
 
 	if(Perks_GetClientHas(iClient, g_iIDs[PYRO_AIRBLAST]) && TF2_GetPlayerClass(iClient) == TFClass_Pyro) {
@@ -90,7 +105,7 @@ AirBoost(client)
 		new iEnt = GetPlayerWeaponSlot(client, 0);
 		new iItemDefinition = GetEntProp(iEnt, Prop_Send, "m_iItemDefinitionIndex");
 
-		if(iItemDefinition != 40)
+		if(iItemDefinition != 21)
 			return;
 
 		decl Float:vecAng[3], Float:vecVel[3];

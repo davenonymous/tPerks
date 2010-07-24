@@ -21,7 +21,7 @@ new g_bRegister = false;
 
 new Handle:g_hCvarAmount;
 
-new g_iAmount = 3;
+new g_iAmount = 2;
 
 public Plugin:myinfo = {
 	name        = "tPerks, TF2, Scout Multijump",
@@ -33,6 +33,19 @@ public Plugin:myinfo = {
 
 public OnPluginStart() {
 	g_iOffsetDash = FindSendPropInfo("CTFPlayer", "m_iAirDash");
+	g_hCvarAmount = CreateConVar("sm_tperks_tf_multijump_amount", "2", "Multijump amount. (Def.: 2)", FCVAR_PLUGIN, true, 0.0);
+
+	HookConVarChange(g_hCvarAmount, Cvar_Changed);
+
+	HookEvent("player_spawn", OnPlayerSpawn);
+}
+
+public OnConfigsExecuted() {
+	g_iAmount = GetConVarInt(g_hCvarAmount);
+}
+
+public Cvar_Changed(Handle:convar, const String:oldValue[], const String:newValue[]) {
+	OnConfigsExecuted();
 }
 
 public OnAllPluginsLoaded() {
@@ -51,7 +64,7 @@ public OnMapEnd() {
 	if(g_bRegister)Perks_UnRegister();
 }
 
-public Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
+public OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
 	new iClient = GetClientOfUserId(GetEventInt(event, "userid"));
 
 	if(Perks_GetClientHas(iClient, g_iIDs[SCOUT_TRIPLEJUMP]) && TF2_GetPlayerClass(iClient) == TFClass_Scout) {
