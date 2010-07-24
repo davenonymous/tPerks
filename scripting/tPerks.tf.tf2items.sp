@@ -9,7 +9,7 @@
 #define PL_VERSION		"0.0.1"
 
 enum Buffs {
-	ENGINEER_MOREMETAL = 0,
+	MULTI_PAINTRAIN = 0,
 	DEMO_EXTRAPIPES = 1,
 	SOLDIER_EXTRAROCKETS = 2,
 	HEAVY_FISTSGIVESPEED = 3,
@@ -18,8 +18,7 @@ enum Buffs {
 	SPY_NORMALWATCHBUFF = 6,
 	MEDIC_GOODSTART = 7,
 	SOLDIER_EXTRAROCKETAMMO = 8,
-	DEMO_EXTRAPIPEAMMO = 9,
-	MULTI_PAINTRAIN = 10
+	DEMO_EXTRAPIPEAMMO = 9
 }
 
 new g_iIDs[Buffs];
@@ -64,15 +63,6 @@ public OnMapEnd() {
 public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefinitionIndex, &Handle:hItemOverride) {
 	if (hItemOverride != INVALID_HANDLE)
 		return Plugin_Continue; // Plugin_Changed
-
-	if (StrEqual(strClassName, "tf_weapon_wrench") && Perks_GetClientHas(iClient, g_iIDs[ENGINEER_MOREMETAL])) {
-		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
-		TF2Items_SetNumAttributes(hTest, 1);
-		TF2Items_SetAttribute(hTest, 0,  80, 1.25);				// give 25% more metal
-		TF2Items_SetQuality(hTest, g_iQuality);
-		hItemOverride = hTest;
-		return Plugin_Changed;
-	}
 
 	if (StrEqual(strClassName, "tf_weapon_grenadelauncher") && Perks_GetClientHas(iClient, g_iIDs[DEMO_EXTRAPIPES])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
