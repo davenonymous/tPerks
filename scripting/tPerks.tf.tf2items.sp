@@ -24,7 +24,11 @@ enum Buffs {
 	MEDIC_ANTISAPPER = 12,
 	HEAVY_HEALTHYCHOCOLATE = 13,
 	ENGINEER_METALPISTOL = 14,
-	ENGINEER_BUILDINGPUMPGUN = 15
+	ENGINEER_BUILDINGPUMPGUN = 15,
+	HEAVY_FASTERSPIN = 16,
+	SOLDIER_BIGBLAST = 17,
+	DEMO_MOREALIVESTICKS = 18,
+	HEAVY_ACCURATENATASHA = 19
 }
 
 new g_iIDs[Buffs];
@@ -53,7 +57,7 @@ public OnMapStart() {
 		g_iIDs[SOLDIER_EXTRAROCKETAMMO] = Perks_Register("Soldier - Extra Rocket ammo", "SOLDIER_EXTRAROCKETAMMO", false);
 		g_iIDs[HEAVY_FISTSGIVESPEED] = Perks_Register("Heavy - Movement speed bonus with fists", "HEAVY_FISTSGIVESPEED", false);
 		g_iIDs[SNIPER_BLEEDINGHUNTSMAN] = Perks_Register("Sniper - Huntsman does bleeding damage", "SNIPER_BLEEDINGHUNTSMAN", false);
-		g_iIDs[MEDIC_UBERSAWBUFF] = Perks_Register("Medic - Ubersaw gives 35% charge on hit", "MEDIC_UBERSAWBUFF", false);
+		g_iIDs[MEDIC_UBERSAWBUFF] = Perks_Register("Medic - Ubersaw gives more charge on hit", "MEDIC_UBERSAWBUFF", false);
 		g_iIDs[SPY_NORMALWATCHBUFF] = Perks_Register("Spy - Normal watch: Decreased consume rate", "SPY_NORMALWATCHBUFF", false);
 		g_iIDs[MEDIC_GOODSTART] = Perks_Register("Medic - Spawn with 20% charge", "MEDIC_GOODSTART", false);
 		g_iIDs[MULTI_PAINTRAIN] = Perks_Register("Demo/Soli - Better Paintrain", "MULTI_PAINTRAIN", false);
@@ -63,6 +67,10 @@ public OnMapStart() {
 		g_iIDs[HEAVY_HEALTHYCHOCOLATE] = Perks_Register("Heavy - Chocolate gives extra heal from medics", "HEAVY_HEALTHYCHOCOLATE", false);
 		g_iIDs[ENGINEER_METALPISTOL] = Perks_Register("Engineer - Metalregeneration when wearing pistol", "ENGINEER_METALPISTOL", false);
 		g_iIDs[ENGINEER_BUILDINGPUMPGUN] = Perks_Register("Engineer - Shotgun has increased damage vs buildings", "ENGINEER_BUILDINGPUMPGUN", false);
+		g_iIDs[HEAVY_FASTERSPIN] = Perks_Register("Heavy - Faster sasha spinup", "HEAVY_FASTERSPIN", false);
+		g_iIDs[SOLDIER_BIGBLAST] = Perks_Register("Soldier - Increased blast radius", "SOLDIER_BIGBLAST", false);
+		g_iIDs[DEMO_MOREALIVESTICKS] = Perks_Register("Demoman - Place more stickies", "DEMO_MOREALIVESTICKS", false);
+		g_iIDs[HEAVY_ACCURATENATASHA] = Perks_Register("Heavy - Increased natasha accuracy", "HEAVY_ACCURATENATASHA", false);
 	}
 }
 
@@ -265,6 +273,47 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 		hItemOverride = hTest;
 		return Plugin_Changed;
 	}
+
+	if (iItemDefinitionIndex == 15 && Perks_GetClientHas(iClient, g_iIDs[HEAVY_FASTERSPIN])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 1);
+		TF2Items_SetAttribute(hTest, 0,  87, 0.6);		// 40% faster minigun spinup
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+	if (iItemDefinitionIndex == 18 && Perks_GetClientHas(iClient, g_iIDs[SOLDIER_BIGBLAST])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 1);
+		TF2Items_SetAttribute(hTest, 0,  99, 1.3);		// 30% increased blast radius
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+	if (iItemDefinitionIndex == 20 && Perks_GetClientHas(iClient, g_iIDs[DEMO_MOREALIVESTICKS])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 1);
+		TF2Items_SetAttribute(hTest, 0,  88, 2.0);		// 2 more life stickies
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+	if (iItemDefinitionIndex == 41 && Perks_GetClientHas(iClient, g_iIDs[HEAVY_ACCURATENATASHA])) {
+		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
+		TF2Items_SetNumAttributes(hTest, 3);
+		TF2Items_SetAttribute(hTest, 0,  106, 0.8);		// 20% less spread
+		TF2Items_SetAttribute(hTest, 0,  32, 1.0);
+		TF2Items_SetAttribute(hTest, 0,  1, 0.75);
+		TF2Items_SetQuality(hTest, g_iQuality);
+		hItemOverride = hTest;
+		return Plugin_Changed;
+	}
+
+
+
 
 
 	if((iItemDefinitionIndex == 35 || iItemDefinitionIndex == 29) && Perks_GetClientHas(iClient, g_iIDs[MEDIC_GOODSTART])) {
