@@ -28,7 +28,7 @@ enum Buffs {
 	HEAVY_FASTERSPIN = 16,
 	SOLDIER_BIGBLAST = 17,
 	DEMO_MOREALIVESTICKS = 18,
-	HEAVY_ACCURATENATASHA = 19
+//	HEAVY_ACCURATENATASHA = 19
 }
 
 new g_iIDs[Buffs];
@@ -70,7 +70,7 @@ public OnMapStart() {
 		g_iIDs[HEAVY_FASTERSPIN] = Perks_Register("Heavy - Faster sasha spinup", "HEAVY_FASTERSPIN", false);
 		g_iIDs[SOLDIER_BIGBLAST] = Perks_Register("Soldier - Increased blast radius", "SOLDIER_BIGBLAST", false);
 		g_iIDs[DEMO_MOREALIVESTICKS] = Perks_Register("Demoman - Place more stickies", "DEMO_MOREALIVESTICKS", false);
-		g_iIDs[HEAVY_ACCURATENATASHA] = Perks_Register("Heavy - Increased natasha accuracy", "HEAVY_ACCURATENATASHA", false);
+		//g_iIDs[HEAVY_ACCURATENATASHA] = Perks_Register("Heavy - Increased natasha accuracy", "HEAVY_ACCURATENATASHA", false);
 	}
 }
 
@@ -300,7 +300,7 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 		hItemOverride = hTest;
 		return Plugin_Changed;
 	}
-
+/*
 	if (iItemDefinitionIndex == 41 && Perks_GetClientHas(iClient, g_iIDs[HEAVY_ACCURATENATASHA])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 3);
@@ -311,7 +311,7 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 		hItemOverride = hTest;
 		return Plugin_Changed;
 	}
-
+*/
 
 
 
