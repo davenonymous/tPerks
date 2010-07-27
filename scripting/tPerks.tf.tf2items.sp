@@ -149,7 +149,7 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 	if (iItemDefinitionIndex == 43 && Perks_GetClientHas(iClient, g_iIDs[HEAVY_FISTSGIVESPEED])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 4);
-		TF2Items_SetAttribute(hTest, 0,  107, 1.3);				// give 30% more movement speed
+		TF2Items_SetAttribute(hTest, 0,  107, 1.1);				// give 30% more movement speed
 		TF2Items_SetAttribute(hTest, 1,  31, 5.0);
 		TF2Items_SetAttribute(hTest, 2,  5, 1.2);
 		TF2Items_SetAttribute(hTest, 3,  128, 1.0);				// when equipped only
@@ -161,7 +161,7 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 	if (iItemDefinitionIndex == 5 && Perks_GetClientHas(iClient, g_iIDs[HEAVY_FISTSGIVESPEED])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 2);
-		TF2Items_SetAttribute(hTest, 0,  107, 1.3);				// give 30% more movement speed
+		TF2Items_SetAttribute(hTest, 0,  107, 1.1);				// give 30% more movement speed
 		TF2Items_SetAttribute(hTest, 1,  128, 1.0);				// when equipped only
 		TF2Items_SetQuality(hTest, g_iQuality);
 		hItemOverride = hTest;
@@ -191,7 +191,7 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 	if (iItemDefinitionIndex == 30 && Perks_GetClientHas(iClient, g_iIDs[SPY_NORMALWATCHBUFF])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 1);
-		TF2Items_SetAttribute(hTest, 0,  34, 0.5);
+		TF2Items_SetAttribute(hTest, 0,  34, 0.8);
 		TF2Items_SetQuality(hTest, g_iQuality);
 		hItemOverride = hTest;
 		return Plugin_Changed;
@@ -209,7 +209,7 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 	if (iItemDefinitionIndex == 13 && Perks_GetClientHas(iClient, g_iIDs[SCOUT_SCATTERRELOAD])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 1);
-		TF2Items_SetAttribute(hTest, 0,  97, 0.8);		// only takes 80% of time to reload
+		TF2Items_SetAttribute(hTest, 0,  97, 0.9);		// only takes 80% of time to reload
 		TF2Items_SetQuality(hTest, g_iQuality);
 		hItemOverride = hTest;
 		return Plugin_Changed;
@@ -218,7 +218,7 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 	if (iItemDefinitionIndex == 14 && Perks_GetClientHas(iClient, g_iIDs[SNIPER_FASTERCHARGE])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 1);
-		TF2Items_SetAttribute(hTest, 0,  90, 1.2);		// 20% faster charge
+		TF2Items_SetAttribute(hTest, 0,  90, 1.1);		// 20% faster charge
 		TF2Items_SetQuality(hTest, g_iQuality);
 		hItemOverride = hTest;
 		return Plugin_Changed;
@@ -258,7 +258,7 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 	if (iItemDefinitionIndex == 22 && Perks_GetClientHas(iClient, g_iIDs[ENGINEER_METALPISTOL])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 2);
-		TF2Items_SetAttribute(hTest, 0,  113, 15.0);		// 15 metal every 5s
+		TF2Items_SetAttribute(hTest, 0,  113, 8.0);		// 15 metal every 5s
 		TF2Items_SetAttribute(hTest, 1,  128, 1.0);			// only when active weapon
 		TF2Items_SetQuality(hTest, g_iQuality);
 		hItemOverride = hTest;
@@ -277,7 +277,7 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 	if (iItemDefinitionIndex == 15 && Perks_GetClientHas(iClient, g_iIDs[HEAVY_FASTERSPIN])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 1);
-		TF2Items_SetAttribute(hTest, 0,  87, 0.6);		// 40% faster minigun spinup
+		TF2Items_SetAttribute(hTest, 0,  87, 0.85);		// 40% faster minigun spinup
 		TF2Items_SetQuality(hTest, g_iQuality);
 		hItemOverride = hTest;
 		return Plugin_Changed;
@@ -286,7 +286,7 @@ public Action:TF2Items_OnGiveNamedItem(iClient, String:strClassName[], iItemDefi
 	if (iItemDefinitionIndex == 18 && Perks_GetClientHas(iClient, g_iIDs[SOLDIER_BIGBLAST])) {
 		new Handle:hTest = TF2Items_CreateItem(OVERRIDE_ATTRIBUTES|OVERRIDE_ITEM_QUALITY);
 		TF2Items_SetNumAttributes(hTest, 1);
-		TF2Items_SetAttribute(hTest, 0,  99, 1.3);		// 30% increased blast radius
+		TF2Items_SetAttribute(hTest, 0,  99, 1.05);		// 30% increased blast radius
 		TF2Items_SetQuality(hTest, g_iQuality);
 		hItemOverride = hTest;
 		return Plugin_Changed;
